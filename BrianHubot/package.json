@@ -1,9 +1,9 @@
 {
-  "name": "BrianBot",
+  "name": "brianbot",
   "version": "0.0.0",
   "private": true,
-  "author": "Y",
-  "description": "What would Brian do if he were an automated bot?",
+  "author": "y",
+  "description": "What would Brian do if he were a robot?",
   "dependencies": {
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
