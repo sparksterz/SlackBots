@@ -101,7 +101,7 @@ git commit -m "My bot!"
 ```
 Now you can call ```heroku create my-app-name``` and it will make you an app space and set your remote git server name to "heroku" and set up the "master" branch. This is a node js app when/if it asks. You may also  remember I mentioned that redis was a dependency of Hubot, so we need to add a redis setup to our app space. You'll want to log into the Heroku web interface https://dashboard.heroku.com/apps and find your app and add what they call an "add-on". This is where things can potentially cost money and Heroku wants to make sure you're liable to foot the bill and not them...Luckily there is an implementation called "Redis Cloud" They have a completely free option which will store 30MB of data for your app. More than enough for our Slackbot though, so no worries. They will still force you to add payment information on file though, not much of a way to get around that.
 
-Now that you've added your redis integration, you can hop over to the settings tab  you'll see an environment for configuration variables. Go ahead and reveal those as you'll need to add a couple which the slack adapter will depend on. You'll probably see a REDISCLOUD_URL. That's fine, no need to touch that one. You will however need to add these:
+Now that you've added your redis integration, you can hop over to the settings tab  you'll see an environment for configuration variables. Go ahead and reveal those as you'll need to add a couple which the slack adapter will depend on. You'll probably see a ```REDISCLOUD_URL```. That's fine, no need to touch that one. You will however need to add these:
 ```
 HEROKU_URL https://my-app.herokuapp.com
 HUBOT_SLACK_TOKEN oxbox-bjidosajioj8232137-3hjkjase89132
@@ -110,13 +110,18 @@ Where my-app is the Heroku app name, and the string of random characters is the 
 
 SHIP IT! (Deploy the code)
 -------------------------
-Alright, the part you've all been waiting for. Let's get our code up there and deployed. If you still have that command prompt with Heroku logged in at your bot's root, go ahead and call git push heroku master
-Then you'll have a screen full of deployment info. Hopefully you'll get success and see the bot pop up in your Slack channel. If you don't you can always call heroku logs and it will try to give your more info as to why it failed.
+Alright, the part you've all been waiting for. Let's get our code up there and deployed. If you still have that command prompt with Heroku logged in at your bot's root, go ahead and call ```git push heroku master```
+
+Then you'll have a screen full of deployment info. Hopefully you'll get success and see the bot pop up in your Slack channel. If you don't you can always call ```heroku logs``` and it will try to give your more info as to why it failed.
+
 Otherwise that's it, every time you push to master, heroku will redploy your app. So make any changes to your bot, be sure to commit them and push to heroku master.
 
 It's live! But at what cost?
 ---------------------------
 So, we've done all this work and now someone just perpetually hosts this for our amusement? Well...not exactly, because you, probably like myself have made a free Heroku account and possibly have never even touched some of these tools, I should let you know what I've found out.
+
 Cut from Hubot's github:
+
 Free dynos on Heroku will sleep after [30 minutes of inactivity](https://devcenter.heroku.com/articles/dyno-sleeping). That means your hubot would leave the chat room and only rejoin when it does get traffic. This is extremely inconvenient since most interaction is done through chat, and hubot has to be online and in the room to respond to messages. To get around this, you can use the [hubot-heroku-keepalive script](https://github.com/hubot-scripts/hubot-heroku-keepalive), which will keep your free dyno alive for up to 18 hours/day. If you never want Hubot to sleep, you will need to [upgrade to Heroku's hobby plan](https://www.heroku.com/pricing).
+
 Unfortunately this means, you'll have to reboot your slackbot each workday, but it's a small price to pay for free hosting ;) Otherwise you can get a paid account or convince someone you know to host your little time waster!
